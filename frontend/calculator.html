@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Calculadora</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Calculadora</h2>
+
+    <input type="text" id="expressao" placeholder="Ex: 10 + 5 * 2">
+
+    <button onclick="calcular()">Calcular</button>
+
+    <p id="resultado"></p>
+
+    <button onclick="window.location.href='history.html'">Ver Histórico</button>
+    <button onclick="logout()">Logout</button>
+  </div>
+
+  <script src="js/calculator.js"></script>
+  <script src="js/logout.js"></script>
+</body>
+</html>
