@@ -6,19 +6,42 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+
   <div class="container">
-    <h2>Login</h2>
 
-    <input type="email" id="email" placeholder="Email">
-    <input type="password" id="senha" placeholder="Senha">
+    <h1>Login</h1>
 
-    <button onclick="login()">Entrar</button>
+    <form id="login-form">
 
-    <p id="msg"></p>
+      <input
+        type="email"
+        id="email"
+        placeholder="Email"
+        required
+      >
 
-    <a href="register.html">Criar conta</a>
+      <input
+        type="password"
+        id="senha"
+        placeholder="Senha"
+        required
+      >
+
+      <button type="submit">
+        Entrar
+      </button>
+
+    </form>
+
+    <p id="mensagem"></p>
+
+    <a href="register.html">
+      Criar conta
+    </a>
+
   </div>
 
   <script src="js/login.js"></script>
+
 </body>
 </html>

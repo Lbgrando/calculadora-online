@@ -1,19 +1,35 @@
-async function calcular() {
+const form = document.getElementById("calculator-form");
+const resultado = document.getElementById("resultado");
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
   const expressao = document.getElementById("expressao").value;
 
-  const res = await fetch("http://localhost:3000/calcular", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    credentials: "include",
-    body: JSON.stringify({ expressao })
-  });
+  try {
 
-  const data = await res.json();
+    const resposta = await fetch("http://localhost:3000/calcular", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      credentials: "include",
+      body: JSON.stringify({
+        expressao
+      })
+    });
 
-  if (res.ok) {
-    document.getElementById("resultado").innerText =
-      `${data.expressao} = ${data.resultado}`;
-  } else {
-    document.getElementById("resultado").innerText = data.erro;
+    const dados = await resposta.json();
+
+    if (!resposta.ok) {
+      resultado.innerText = dados.erro;
+      return;
+    }
+
+    resultado.innerText = `${expressao} = ${dados.resultado}`;
+
+  } catch (err) {
+    console.log(err);
+    resultado.innerText = "Erro no servidor";
   }
-}
+});

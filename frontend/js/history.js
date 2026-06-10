@@ -1,25 +1,53 @@
+const lista = document.getElementById("lista-historico");
+
+
 async function carregarHistorico() {
-  const res = await fetch("http://localhost:3000/historico", {
-    method: "GET",
-    credentials: "include"
-  });
 
-  const data = await res.json();
 
-  if (!res.ok) {
-    alert("Você precisa estar logado!");
-    window.location.href = "index.html";
-    return;
+  try {
+
+
+    const resposta = await fetch("http://localhost:3000/historico", {
+      method: "GET",
+      credentials: "include"
+    });
+
+
+    const dados = await resposta.json();
+
+
+    console.log(dados);
+
+
+    lista.innerHTML = "";
+
+
+    dados.forEach(item => {
+
+
+      lista.innerHTML += `
+        <div>
+          <p>${item.expressao} = ${item.resultado}</p>
+          <small>
+            ${new Date(item.criado_em).toLocaleString()}
+          </small>
+          <hr>
+        </div>
+      `;
+    });
+
+
+  } catch (err) {
+
+
+    console.log(err);
+
+
+    lista.innerHTML = `
+      <p>Erro ao carregar histórico</p>
+    `;
   }
-
-  const lista = document.getElementById("lista");
-  lista.innerHTML = "";
-
-  data.forEach(item => {
-    const li = document.createElement("li");
-    li.innerText = `${item.expressao} = ${item.resultado} (${new Date(item.criado_em).toLocaleString()})`;
-    lista.appendChild(li);
-  });
 }
+
 
 carregarHistorico();

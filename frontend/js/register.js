@@ -1,18 +1,39 @@
-async function register() {
+const form = document.getElementById("register-form");
+const mensagem = document.getElementById("mensagem");
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
   const email = document.getElementById("email").value;
   const senha = document.getElementById("senha").value;
 
-  const res = await fetch("http://localhost:3000/register", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, senha })
-  });
+  try {
+    const resposta = await fetch("http://localhost:3000/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      credentials: "include",
+      body: JSON.stringify({
+        email,
+        senha
+      })
+    });
 
-  const data = await res.json();
+    const dados = await resposta.json();
 
-  if (res.ok) {
-    document.getElementById("msg").innerText = "Cadastrado com sucesso!";
-  } else {
-    document.getElementById("msg").innerText = data.erro;
+    if (!resposta.ok) {
+      mensagem.innerText = dados.erro;
+      return;
+    }
+
+    mensagem.innerText = dados.mensagem;
+
+    setTimeout(() => {
+      window.location.href = "index.html";
+    }, 1000);
+
+  } catch (err) {
+    mensagem.innerText = "Erro no servidor";
   }
-}
+});
